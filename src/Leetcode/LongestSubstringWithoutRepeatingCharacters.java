@@ -6,34 +6,24 @@ public class LongestSubstringWithoutRepeatingCharacters {
 
     public static void main(String[] args) {
 
-        System.out.println(lengthOfLongestSubstring("bpfbhmipx"));
+        System.out.println(lengthOfLongestSubstring("dvdaf"));
     }
 
     public static int lengthOfLongestSubstring(String s) {
         if (s.isEmpty()){
             return 0;
         }
-        Set<Character> resultSet = new HashSet<>();
-        List<Character> list = new ArrayList<>();
+        List<Character> resultList = new ArrayList<>();
         int maxLength = 0;
         for (Character c : s.toCharArray()) {
-            if (resultSet.add(c)){
-                list.add(c);
-                if (maxLength < resultSet.size()){
-                    maxLength = resultSet.size();
+            if (!resultList.contains(c)){
+                resultList.add(c);
+                if (maxLength < resultList.size()){
+                    maxLength = resultList.size();
                 }
-
             }else {
-                resultSet.clear();
-                List<Character> temp = new ArrayList<>();
-                for (int i = list.indexOf(c) + 1; i < list.size(); i++) {
-                    resultSet.add(list.get(i));
-                    temp.add(list.get(i));
-                }
-                list.clear();
-                list.addAll(temp);
-                list.add(c);
-                resultSet.add(c);
+                resultList.subList(0,resultList.indexOf(c)+1).clear();
+                resultList.add(c);
             }
         }
         return maxLength;
