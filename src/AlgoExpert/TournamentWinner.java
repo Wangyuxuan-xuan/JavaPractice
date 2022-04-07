@@ -37,7 +37,7 @@ public class TournamentWinner {
                 winner = entry.getKey();
             }
         }
-        return winner;  
+        return winner;
     }
 
 }
