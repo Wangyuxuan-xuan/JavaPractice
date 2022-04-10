@@ -9,6 +9,8 @@ public class LongestPeak {
 
     /**
      * O(n) time , O(1) space , where n is the length of input array ;
+     *
+     * The basic idea is
      */
     public static int longestPeak(int[] array) {
 
