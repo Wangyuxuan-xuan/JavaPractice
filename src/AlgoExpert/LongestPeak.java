@@ -10,7 +10,8 @@ public class LongestPeak {
     /**
      * O(n) time , O(1) space , where n is the length of input array ;
      *
-     * The basic idea is
+     * The basic idea is to find the peak first , and find its left and right array .
+     * A peak is the 区域性极大值 , the left < peak , peak > right
      */
     public static int longestPeak(int[] array) {
 

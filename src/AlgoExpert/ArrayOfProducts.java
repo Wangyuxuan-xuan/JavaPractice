@@ -32,7 +32,10 @@ public class ArrayOfProducts {
     /**
      * O(n) time , O(n) space , where n is the length of array.
      *
-     * the basic idea is 
+     * When looping from left to right , all the value in array are replaced with the product of all its left numbers ,
+     * what's missing there is the product of its right numbers .
+     * To add the right products , we simply loop again from right to left , adding the right product to the value ,
+     * the same way as left product , Now we have our result
      */
     public static int[] arrayOfProductsLeftAndRight(int[] array) {
 
