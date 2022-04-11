@@ -1,4 +1,4 @@
-package AlgoExpert;
+package AlgoExpert.Arrays;
 
 public class MonotonicArray {
 

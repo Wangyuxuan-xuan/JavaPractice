@@ -1,4 +1,4 @@
-package AlgoExpert;
+package AlgoExpert.Arrays;
 
 import java.util.Arrays;
 import java.util.HashMap;
