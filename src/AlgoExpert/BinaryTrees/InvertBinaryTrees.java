@@ -33,9 +33,6 @@ public class InvertBinaryTrees {
         if (tree == null){
             return;
         }
-//        BinaryTree temp = tree.left;
-//        tree.left = tree.right;
-//        tree.right = temp;
 
         swap(tree);
         invertBinaryTree(tree.left);
@@ -51,12 +48,32 @@ public class InvertBinaryTrees {
 
     /**
      * This swap is not working , should investigate why
+     *
+     * Java is always passing down a pointer , If our pointer still refer to the same object will caller function ,
+     * we can access and modify it , if we assign a new object to it ,
+     * it actually points to this new object and doesn't affect the object in caller method
+     *
+     * Here we pass down left pointer point to tree.left and right pointer point to tree.right
+     * we change the left pointer point to right and right pointer point to left ,
+     * but inside caller method , tree.left is till point to left and tree.right -> right too.
+     * They doesn't change .
+     *
+     * But when passing down a tree object , since our pointer is point to tree object as the caller function does ,
+     * we can change the tree.left and tree.right pointer in called method .
      */
     public static void swapNotWorking(BinaryTree left,BinaryTree right){
         BinaryTree temp = left;
         left = right;
         right = temp;
     }
+
+    /**
+     * A trick to swap in Java
+     */
+    public static int swap(int a , int b){
+        return a; //todo    call like a = swap(b , b = a);
+    }
+
     public static void invertBinaryTree1(BinaryTree tree) {
         if (tree == null){
             return;
