@@ -1,5 +1,7 @@
 package AlgoExpert.BinaryTrees;
 
+import java.util.ArrayList;
+
 public class FindSuccessor {
 
     public static void main(String[] args) {
@@ -25,7 +27,38 @@ public class FindSuccessor {
         }
     }
 
+    /**
+     * O(n) time , O(n) space
+     */
     public static BinaryTree findSuccessor(BinaryTree tree, BinaryTree node) {
+
+        ArrayList<BinaryTree> nodeInOrderTraversalOrder = new ArrayList<>();
+        addInOrderTraversal(tree , nodeInOrderTraversalOrder);
+
+        for (int i = 0; i < nodeInOrderTraversalOrder.size(); i++) {
+
+            if (node.equals(nodeInOrderTraversalOrder.get(i))){
+                if (i + 1 >= nodeInOrderTraversalOrder.size()){
+                    return null;
+                }
+                return nodeInOrderTraversalOrder.get(i + 1);
+            }
+        }
+
+        return null;
+    }
+
+    public static void addInOrderTraversal(BinaryTree node , ArrayList<BinaryTree> arrayList){
+
+        if (node == null){
+            return;
+        }
+        addInOrderTraversal(node.left , arrayList);
+        arrayList.add(node);
+        addInOrderTraversal(node.right, arrayList);
+    }
+
+    public static BinaryTree findSuccessorNotReady(BinaryTree tree, BinaryTree node) {
 
         boolean findTarget = false;
         return inOrderTraversal(tree , node,findTarget).result;
