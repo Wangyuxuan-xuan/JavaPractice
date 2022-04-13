@@ -5,13 +5,19 @@ public class FindClosestValueInBST {
     public static void main(String[] args) {
 
         BST binaryTree = new BST(10);
-        binaryTree.left = new BST(8);
-        binaryTree.left.left = new BST(3);
-        binaryTree.left.right = new BST(9);
+        binaryTree.left = new BST(5);
         binaryTree.right = new BST(15);
+        binaryTree.left.left = new BST(2);
+        binaryTree.left.right = new BST(5);
+        binaryTree.left.left.left = new BST(1);
+        binaryTree.right.left = new BST(13);
+        binaryTree.right.right = new BST(22);
+        binaryTree.right.left.right = new BST(14);
 
 
-        System.out.println(findClosestValueInBst(binaryTree, 4));
+
+        System.out.println(findClosestValueInBst(binaryTree, 12));
+        System.out.println(findClosestValueInBstIterative(binaryTree,12));
     }
 
     static class BST {
@@ -26,27 +32,45 @@ public class FindClosestValueInBST {
 
     public static int findClosestValueInBst(BST tree, int target) {
 
-        return traversalBST(tree , Integer.MAX_VALUE , target);
+        return traversalBSTRecursion(tree , Integer.MAX_VALUE , target) + target;
     }
 
-    public static int traversalBST(BST node , int min, int target){
+    public static int traversalBSTRecursion(BST node , int min, int target){
 
         if (node == null){
             return min;
         }
 
-        int currentDiff = Math.abs(node.value - target);
-        if (currentDiff < min){
+        int currentDiff = node.value - target;
+        if (Math.abs(currentDiff) < Math.abs(min)){
             min = currentDiff;
         }
 
         if (target < node.value){
-            min = traversalBST(node.left , min , target);
+            return traversalBSTRecursion(node.left , min , target);
         }
 
-        min = traversalBST(node.right , min , target);
+        return traversalBSTRecursion(node.right , min , target);
 
-        return min;
     }
 
+
+    public static int findClosestValueInBstIterative(BST tree, int target) {
+
+        BST currentNode =  tree;
+        int closest = tree.value;
+        while (currentNode != null){
+            if (Math.abs(currentNode.value - target) < Math.abs(closest - target)){
+                closest = currentNode.value;
+            }
+            if (target < currentNode.value){
+                currentNode = currentNode.left;
+            }else if(target > currentNode.value){
+                currentNode = currentNode.right;
+            }else {
+                return closest; //save calculation
+            }
+        }
+        return closest;
+    }
 }
