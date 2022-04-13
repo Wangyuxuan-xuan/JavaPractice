@@ -56,7 +56,7 @@ public class InvertBinaryTrees {
      * Here we pass down left pointer point to tree.left and right pointer point to tree.right
      * we change the left pointer point to right and right pointer point to left ,
      * but inside caller method , tree.left is till point to left and tree.right -> right too.
-     * They doesn't change .
+     * They won't change .
      *
      * But when passing down a tree object , since our pointer is point to tree object as the caller function does ,
      * we can change the tree.left and tree.right pointer in called method .
