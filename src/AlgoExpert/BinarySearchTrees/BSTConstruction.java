@@ -74,18 +74,57 @@ public class BSTConstruction {
         }
 
         public BST remove(int value) {
+            remove(value , null);
+            return this;
+        }
+
+        public void remove(int value , BST parentNode){
+
             BST currentNode = this;
             while (currentNode != null){
-
                 if (value < currentNode.value){
+                    parentNode = currentNode;
                     currentNode = currentNode.left;
                 }else if (value > currentNode.value){
+                    parentNode = currentNode;
                     currentNode = currentNode.right;
                 }else {
-                    currentNode = null;
+                    if (currentNode.left != null && currentNode.right != null){
+                        currentNode.value = findSmallestValueInCurrentNode(currentNode.right).value;
+                        currentNode.right.remove(currentNode.value,currentNode);
+                    }//when we reach here , either left or right subtree is null
+                    else if (parentNode == null){
+                        if (currentNode.left != null){
+                            currentNode.value = currentNode.left.value;
+                            //todo seems it has to be this order , but why ???
+                            currentNode.right = currentNode.left.right;
+                            currentNode.left = currentNode.left.left;
+
+                        }else if (currentNode.right != null){
+                            currentNode.value = currentNode.right.value;
+                            currentNode.left = currentNode.right.left;
+                            currentNode.right = currentNode.right.right;
+                        }else {
+                            //singe node tree , do nothing
+                        }
+                    }
+                    //These two block has to be under the parent == null block , otherwise it might have null pointer exception
+                    else if (currentNode == parentNode.left){
+                        parentNode.left = currentNode.left == null ? currentNode.right : currentNode.left;
+                    }else if(currentNode == parentNode.right){
+                        parentNode.right = currentNode.left == null ? currentNode.right : currentNode.left;
+                    }//Here we reach the case that we are removing the root node
+
+                    break;
                 }
             }
-            return this;
+        }
+
+        public BST findSmallestValueInCurrentNode(BST currentNode){
+            while (currentNode.left != null){
+                currentNode = currentNode.left;
+            }
+            return currentNode;
         }
     }
 }
