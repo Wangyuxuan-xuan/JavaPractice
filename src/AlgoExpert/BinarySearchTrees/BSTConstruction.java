@@ -90,6 +90,7 @@ public class BSTConstruction {
                     currentNode = currentNode.right;
                 }else {
                     if (currentNode.left != null && currentNode.right != null){
+                        //todo what about the time complexity here ?
                         currentNode.value = findSmallestValueInCurrentNode(currentNode.right).value;
                         currentNode.right.remove(currentNode.value,currentNode);
                     }//when we reach here , either left or right subtree is null
@@ -120,6 +121,7 @@ public class BSTConstruction {
             }
         }
 
+        //todo How do we calculate the time complexity here ???
         public BST findSmallestValueInCurrentNode(BST currentNode){
             while (currentNode.left != null){
                 currentNode = currentNode.left;

@@ -8,11 +8,11 @@ public class ValidateBST {
         bstTree.left = new BST(8);
         bstTree.left.left = new BST(3);
 //        binaryTree.left.left.left = new BST(1);
-        bstTree.left.right = new BST(9);
         bstTree.left.right = new BST(12);
+//        bstTree.left.right = new BST(12);
         bstTree.right = new BST(15);
 
-        System.out.println(validateBst(bstTree));
+        System.out.println(validateBstByInterval(bstTree));
     }
 
     static class BST {
@@ -26,7 +26,8 @@ public class ValidateBST {
     }
 
     /**
-     * O(n) time , O(n) space , where n is the number of nodes in BST tree
+     * avg :  time complexity O(n) ? O(n*d) ? O(n*log(n)) ??? ,
+     * O(d) space , where n is the number of nodes in BST tree and d is the depth of the tree
      */
     public static boolean validateBst(BST tree) {
 
@@ -62,5 +63,31 @@ public class ValidateBST {
             currentNode = currentNode.left;
         }
         return currentNode;
+    }
+
+
+    public static boolean validateBstByInterval(BST tree) {
+
+        return validateBstByInterval(tree , Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
+
+    public static boolean validateBstByInterval(BST currentNode , int minValue , int maxValue) {
+
+       if (currentNode == null){
+           return true;
+       }
+
+       boolean isValid = currentNode.value >= minValue && currentNode.value < maxValue;
+
+        boolean isLeftValid = true;
+        boolean isRightValid = true;
+       if (currentNode.left != null){
+           isLeftValid = validateBstByInterval(currentNode.left , minValue , currentNode.value);
+       }
+       if (currentNode.right != null){
+           isRightValid = validateBstByInterval(currentNode.right , currentNode.value , maxValue);
+       }
+
+        return isValid && isLeftValid && isRightValid;
     }
 }
