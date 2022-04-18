@@ -58,6 +58,9 @@ public class FindKthLargestValueInBST {
     }
 
 
+    /**
+     * O(h + k) time , O(h) space
+     */
     public static int findKthLargestValueInBstReverseInOrderTraversal(BST tree, int k) {
 
         VisitedNodeInfo visitedNodeInfo = new VisitedNodeInfo(0 , null);
