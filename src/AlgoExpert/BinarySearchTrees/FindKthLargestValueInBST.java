@@ -1,7 +1,6 @@
 package AlgoExpert.BinarySearchTrees;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,13 +14,13 @@ public class FindKthLargestValueInBST {
         bstTree.left.right = new BST(9);
         bstTree.right = new BST(15);
 
-        BST bstTree1 = new BST(1);
-        bstTree1.right = new BST(2);
-        bstTree1.right.right = new BST(3);
-        bstTree1.right.right.right = new BST(4);
-        bstTree1.right.right.right.right = new BST(5);
+//        BST bstTree1 = new BST(1);
+//        bstTree1.right = new BST(2);
+//        bstTree1.right.right = new BST(3);
+//        bstTree1.right.right.right = new BST(4);
+//        bstTree1.right.right.right.right = new BST(5);
 
-        System.out.println(findKthLargestValueInBstOptimize(bstTree1 , 5));
+        System.out.println(findKthLargestValueInBstReverseInOrderTraversal(bstTree , 3));
     }
 
     static class BST {
@@ -35,85 +34,64 @@ public class FindKthLargestValueInBST {
     }
 
     /**
-     * O(nlog(n)) time O(n) space
+     * O(n) time O(n) space
+     *
+     * we can actually use in order traversal here , it will add the node from left to right , which is a sorted array already
      */
     public static int findKthLargestValueInBst(BST tree, int k) {
 
         List<Integer> numbersInBST = new ArrayList<>();
-        traversalBST(tree , numbersInBST);
+        inOrderTraversalBST(tree , numbersInBST);
 
-        numbersInBST.sort(Comparator.reverseOrder());
-
-        return numbersInBST.get(k -1);
+        return numbersInBST.get(numbersInBST.size() - k);
     }
 
-    public static void traversalBST(BST currentNode , List<Integer> list){
+    public static void inOrderTraversalBST(BST currentNode , List<Integer> list){
 
         if (currentNode == null){
             return;
         }
 
+        inOrderTraversalBST(currentNode.left , list);
         list.add(currentNode.value);
-        traversalBST(currentNode.left , list);
-        traversalBST(currentNode.right , list);
+        inOrderTraversalBST(currentNode.right , list);
     }
 
 
-    public static int findKthLargestValueInBstOptimize(BST tree, int k) {
+    public static int findKthLargestValueInBstReverseInOrderTraversal(BST tree, int k) {
 
-        CurrentNodeInfo largestNodeInfo = findLargestValueNode(tree , null);
-        BST currentNode = largestNodeInfo.currentNode;
-        BST parentNode = largestNodeInfo.parentNode;
-        k--;
-        while (k > 0){
+        VisitedNodeInfo visitedNodeInfo = new VisitedNodeInfo(0 , null);
 
-            if (currentNode.left == null){
-                currentNode = parentNode;
-                parentNode = findParentNode(tree , currentNode);
-            }else{
-                CurrentNodeInfo currentNodeInfo = findLargestValueNode(currentNode.left , currentNode);
-                currentNode = currentNodeInfo.currentNode;
-                parentNode = currentNodeInfo.parentNode;
-            }
-            k--;
-        }
-
-        return currentNode.value;
-    }
-    public static CurrentNodeInfo findLargestValueNode(BST currentNode , BST parentNode){
-        while (currentNode.right != null){
-            parentNode = currentNode;
-            currentNode = currentNode.right;
-        }
-        return new CurrentNodeInfo(currentNode , parentNode);
+        reverseInorderTraversal(tree,visitedNodeInfo,k);
+        return visitedNodeInfo.lastVisitedNode.value;
     }
 
-    public static BST findParentNode(BST currentNode , BST inputNode){
-        BST parentNode = null;
-        while (currentNode != null){
+    public static void reverseInorderTraversal(BST currentNode , VisitedNodeInfo visitedNodeInfo , int k){
 
-            if (inputNode.value < currentNode.value){
-                parentNode = currentNode;
-                currentNode = currentNode.left;
-            }else {
-                parentNode = currentNode;
-                currentNode = currentNode.right;
-            }
-            if (currentNode == inputNode){
-                break;
-            }
-        }
-        return parentNode;
+       if (currentNode == null || visitedNodeInfo.numOfVisitedNodes >= k ){
+           return;
+       }
+
+       reverseInorderTraversal(currentNode.right , visitedNodeInfo , k);
+
+       if (visitedNodeInfo.numOfVisitedNodes < k){
+           visitedNodeInfo.numOfVisitedNodes += 1;
+           visitedNodeInfo.lastVisitedNode = currentNode;
+           reverseInorderTraversal(currentNode.left , visitedNodeInfo , k);
+       }
+
+
     }
 
-    static class CurrentNodeInfo{
-        BST currentNode ;
-        BST parentNode ;
+    static class VisitedNodeInfo{
+        int numOfVisitedNodes ;
+        BST lastVisitedNode;
 
-        public CurrentNodeInfo(BST currentNode, BST parentNode) {
-            this.currentNode = currentNode;
-            this.parentNode = parentNode;
+        public VisitedNodeInfo(int numOfVisitedNodes, BST lastVisitedNode) {
+            this.numOfVisitedNodes = numOfVisitedNodes;
+            this.lastVisitedNode = lastVisitedNode;
         }
     }
 
+    //todo  The space complexity of a recursion algorithm is  how many operation would we need to perform before we reach the base case
 }
