@@ -1,8 +1,13 @@
 package AlgoExpert.BinaryTrees;
 
+//import OOP.DefaultScopeClass;
+
 public class BinaryTreeDiameter {
 
     public static void main(String[] args) {
+
+        //Default is not public , can only be accessed within package
+//        DefaultScopeClass defaultScopeClass = new DefaultScopeClass();
 
         BinaryTree binaryTree = new BinaryTree(1);
         binaryTree.left = new BinaryTree(2);
