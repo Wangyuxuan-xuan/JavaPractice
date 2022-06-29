@@ -31,6 +31,8 @@ public class NumberOfWaysToMakeChange {
      */
     static int dfs(int i, int currentRemainingCoin , int[] denoms ,HashMap<Integer , Integer> cache ){
 
+        //todo how to cache ?
+        //currently the caching will produce repeat results that the "i" trick eliminated
         if (cache.containsKey(currentRemainingCoin)){
             return cache.get(currentRemainingCoin);
         }
@@ -42,9 +44,9 @@ public class NumberOfWaysToMakeChange {
         //declare the var here will not affect other branch in decision tree
         int sum = 0;
 
-        //j starts from i , when we don not want the equivalent path(same combinations)
+        //j starts from i , when we do not want the equivalent path(same combinations)
         for (int j = i; j < denoms.length; j++) {
-            //make calculation in parameter if u dont't want them to effect each other !
+            //make calculation in parameter if u do not want them to effect each other !
             sum += dfs( j ,currentRemainingCoin - denoms[j] , denoms , cache);
         }
         cache.put(currentRemainingCoin , sum);
