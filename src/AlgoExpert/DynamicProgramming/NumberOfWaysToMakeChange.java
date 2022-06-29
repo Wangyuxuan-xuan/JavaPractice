@@ -1,5 +1,7 @@
 package AlgoExpert.DynamicProgramming;
 
+import java.util.HashMap;
+
 public class NumberOfWaysToMakeChange {
 
     //todo
@@ -15,7 +17,8 @@ public class NumberOfWaysToMakeChange {
     public static int numberOfWaysToMakeChange(int n, int[] denoms) {
         // Write your code here.
 
-        return dfs(0,n,denoms);
+        HashMap<Integer , Integer> cache = new HashMap<>();
+        return dfs(0,n,denoms , cache);
 
     }
 
@@ -26,22 +29,25 @@ public class NumberOfWaysToMakeChange {
      * @param denoms
      * @return
      */
-    static int dfs(int i, int currentRemainingCoin , int[] denoms  ){
+    static int dfs(int i, int currentRemainingCoin , int[] denoms ,HashMap<Integer , Integer> cache ){
 
+        if (cache.containsKey(currentRemainingCoin)){
+            return cache.get(currentRemainingCoin);
+        }
         if (currentRemainingCoin < 0 ){
             return 0;
         }else if(currentRemainingCoin == 0){
             return 1;
         }
-        //declear the var here will not affect other branch in decision tree
+        //declare the var here will not affect other branch in decision tree
         int sum = 0;
 
         //j starts from i , when we don not want the equivalent path(same combinations)
         for (int j = i; j < denoms.length; j++) {
-//            currentRemainingCoin -= demon;
             //make calculation in parameter if u dont't want them to effect each other !
-            sum += dfs( j ,currentRemainingCoin - denoms[j] , denoms );
+            sum += dfs( j ,currentRemainingCoin - denoms[j] , denoms , cache);
         }
+        cache.put(currentRemainingCoin , sum);
         return sum;
     }
 }
