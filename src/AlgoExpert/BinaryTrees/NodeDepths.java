@@ -13,8 +13,9 @@ public class NodeDepths {
         binaryTree.right = new BinaryTree(3);
 
 
-        System.out.println(nodeDepths(binaryTree));
-        System.out.println(nodeDepthsBackTracking(binaryTree));
+        System.out.println(calculateTreeHeight(binaryTree ));
+//        System.out.println(nodeDepths(binaryTree));
+//        System.out.println(nodeDepthsBackTracking(binaryTree));
     }
 
     static class BinaryTree {
@@ -71,5 +72,17 @@ public class NodeDepths {
         int right = calculateBranchDepth(node.right , currentDepth + 1);
 
         return currentDepth + left + right;
+    }
+
+    static int calculateTreeHeight(BinaryTree node ){
+
+        if (node == null){
+            return 0;
+        }
+
+        int leftTreeHeight = calculateTreeHeight(node.left );
+        int rightTreeHeight = calculateTreeHeight(node.right);
+
+        return Math.max(leftTreeHeight,rightTreeHeight) + 1;
     }
 }
