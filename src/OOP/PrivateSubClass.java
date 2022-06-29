@@ -6,6 +6,9 @@ public class PrivateSubClass {
     private Long id;
 
     private int addPrivate(int a){
+
+        int b = 0;
+
         return 0;
     }
 
@@ -20,8 +23,6 @@ public class PrivateSubClass {
 
             return id;
         }
-
-
     }
 
 }
