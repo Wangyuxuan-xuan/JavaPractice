@@ -7,11 +7,13 @@ import java.util.List;
 
 public class CourseSchedule {
 
+
     public static void main(String[] args) {
 
         CourseSchedule courseSchedule = new CourseSchedule();
         System.out.println(courseSchedule.canFinish(2 , new int[][]{{1,0} , {0,1}}));
     }
+
 
     HashMap<Integer , List<Integer>> preMap = new HashMap<>();
     HashSet<Integer> visited = new HashSet<>();

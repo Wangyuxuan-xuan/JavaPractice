@@ -31,6 +31,7 @@ public class NumberOfWaysToMakeChange {
      */
     static int dfs(int i, int currentRemainingCoin , int[] denoms ,HashMap<Integer , Integer> cache ){
 
+        //if it has sth to do with min or max , then it may potentially memoizaton
         //todo how to cache ?
         //currently the caching will produce repeat results that the "i" trick eliminated
         if (cache.containsKey(currentRemainingCoin)){

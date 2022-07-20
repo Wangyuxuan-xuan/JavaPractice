@@ -6,17 +6,22 @@ public class CourseScheduleII {
 
     public static void main(String[] args) {
         CourseScheduleII courseScheduleII = new CourseScheduleII();
-        System.out.println(Arrays.toString(courseScheduleII.findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
+
+        System.out.println(Arrays.toString(courseScheduleII.findOrder(5, new int[][]{{1, 2},{2,3},{4,0}})));
+
     }
 
     HashMap<Integer , List<Integer>> preMap = new HashMap<>();
     HashSet<Integer> cycle = new HashSet<>();
+
     HashSet<Integer> visited = new HashSet<>();
     List<Integer> output = new ArrayList<>();
+
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
 
         for (int i = 0; i < numCourses; i++) {
+
             preMap.put(i, new ArrayList<>());
         }
 
@@ -55,6 +60,5 @@ public class CourseScheduleII {
 
         return true;
     }
-
 
 }
