@@ -10,7 +10,7 @@ public class NumberOfWaysToTraverseGraph {
     public static void main(String[] args) {
         NumberOfWaysToTraverseGraph numberOfWaysToTraverseGraph = new NumberOfWaysToTraverseGraph();
 
-        System.out.println(numberOfWaysToTraverseGraph.numberOfWaysToTraverseGraphDfs(4,3));
+        System.out.println(numberOfWaysToTraverseGraph.numberOfWaysToTraverseGraphDfs(3,1));
     }
     public int numberOfWaysToTraverseGraph(int width, int height) {
         // Write your code here.
